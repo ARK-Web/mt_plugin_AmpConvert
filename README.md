@@ -1,49 +1,49 @@
 # mt_plugin_AmpConvert
 
-Movable Type�pAMP�y�[�W�쐬�v���O�C��
+Movable Type用AMPページ作成プラグイン
 ====
 
-ARK-Web/mt_plugin_AmpConvert - Movable Type�ł�AMP�Ή��y�[�W�������x������v���O�C���ł��B
+ARK-Web/mt_plugin_AmpConvert - Movable TypeでのAMP対応ページ生成を支援するプラグインです。
 
-### �T�v
-* img �^�O�� amp-img �ɕϊ����A����ɉ摜�T�C�Y�������s�����Ă���t������
-* YouTube���ߍ��݃R�[�h�� amp-youtube �^�O�ɕϊ�����
-* �]���ȃC�����C��CSS�̋L�q����������
+### 概要
+* img タグを amp-img に変換し、さらに画像サイズ属性が不足してたら付加する
+* YouTube埋め込みコードを amp-youtube タグに変換する
+* 余分なインラインCSSの記述を除去する
 
-�Ƃ������ϊ����s���܂��B
+といった変換を行います。
 
-### ����
-���̕ϊ����s���܂��B
+### 動作
+次の変換が行われます。
 
-#### 1. �C�����C�� style �̏���
+#### 1. インライン style の除去
 
-`<mt:AmpConvert>�`</mt:AmpConvert>` ���� �S�ẴC�����C��CSS�̋L�q�ustyle="XXX"�v���폜����܂��B
+`<mt:AmpConvert>〜</mt:AmpConvert>` 内の 全てのインラインCSSの記述「style="XXX"」が削除されます。
 
 
-#### 2. img �� amp-img�֕ϊ�
+#### 2. img → amp-imgへ変換
 
-�S�Ă� `<img>`�^�O���A`<amp-img>` �^�O�ɒu�������܂��B
+全ての `<img>`タグが、`<amp-img>` タグに置き換わります。
 
-**amp-img��width,height�����ݒ�**
+**amp-imgのwidth,height自動設定**
 
-����img�^�O�� width �܂��� height �������L�q����Ă��Ȃ��ꍇ�ɁA�摜�̃T�C�Y���擾���āAamp-img �Ɏ����ݒ肵�܂�(�p�����[�^�̎w��ŃI�t�ɂł��܂�)�B
+元のimgタグに width または height 属性が記述されていない場合に、画像のサイズを取得して、amp-img に自動設定します(パラメータの指定でオフにできます)。
 
-�Ȃ�炩�̗��R�ŉ摜���擾�ł��Ȃ������ꍇ�́Awidth,height�̎����ݒ�͍s��ꂸ�AMT���O�Ƀ��O���c���܂��B
+なんらかの理由で画像が取得できなかった場合は、width,heightの自動設定は行われず、MTログにログを残します。
 
-#### 3. YouTube�̖��ߍ��݃R�[�h �� amp-youtube �ɕϊ�
+#### 3. YouTubeの埋め込みコード を amp-youtube に変換
 
-iframe �^�O�̂����Asrc���uhttps://www.youtube.com/embed/�`�v�̂��̂��ϊ��ΏۂƂȂ�܂��B
+iframe タグのうち、srcが「https://www.youtube.com/embed/〜」のものが変換対象となります。
 
-�^�O `<iframe>�`</iframe>` �� `<amp-youtube>�`</amp-youtube>`�ɕϊ�����A�p�����[�^�ɂ��Ă͎��̃��[���ŕϊ�����܂��B
+タグ `<iframe>〜</iframe>` が `<amp-youtube>〜</amp-youtube>`に変換され、パラメータについては次のルールで変換されます。
 
 * data-videoid
-  * https://www.youtube.com/embed/XXXX �́uXXXX�v��data-videoid�ɐݒ肳���
-  * layout: �uresponsive�v���ݒ肳��܂�
-  * src: �폜����܂�
-  * frameborder: �폜����܂�
-  * allowfullscreen: �폜����܂�
+  * https://www.youtube.com/embed/XXXX の「XXXX」がdata-videoidに設定される
+  * layout: 「responsive」が設定されます
+  * src: 削除されます
+  * frameborder: 削除されます
+  * allowfullscreen: 削除されます
 
-����YouTube���ߍ��݃R�[�h
+元のYouTube埋め込みコード
 
 	<iframe
 		width="560"
@@ -53,8 +53,8 @@ iframe �^�O�̂����Asrc���uhttps://www.youtube.com/embed/�`�v�̂��̂��ϊ��ΏۂƂ�
 		allowfullscreen>
 	</iframe>
 
-��
-amp-youtube �ϊ���
+↓
+amp-youtube 変換後
 
 	<amp-youtube
 		data-videoid="RDDxlJld2AxSo" 
