@@ -1,0 +1,12 @@
+id: AmpConvert
+key: AmpConvert
+name: AmpConvert
+author_name: <__trans phrase="_PLUGIN_AUTHOR">
+author_link: http://www.ark-web.jp/
+description: <__trans phrase="_PLUGIN_DESCRIPTION">
+version: 1.0
+l10n_class: AmpConvert::L10N
+
+tags:
+    block:
+        AmpConvert: $AmpConvert::AmpConvert::Plugin::hdlr_block_amp_convert
