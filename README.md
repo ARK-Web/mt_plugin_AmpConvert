@@ -1,5 +1,4 @@
-# mt_plugin_AmpConvert
-
+# 
 「AMP Convert」 MT用AMPページ生成支援プラグイン
 ====
 
