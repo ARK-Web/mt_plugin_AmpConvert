@@ -1,6 +1,6 @@
 # mt_plugin_AmpConvert
 
-Movable Type用AMPページ作成プラグイン
+「AMP Convert」 MT用AMPページ生成支援プラグイン
 ====
 
 ARK-Web/mt_plugin_AmpConvert - Movable TypeでのAMP対応ページ生成を支援するプラグインです。
