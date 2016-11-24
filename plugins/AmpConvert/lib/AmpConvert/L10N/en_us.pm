@@ -6,8 +6,7 @@ use base 'AmpConvert::L10N';
 use vars qw( %Lexicon );
 
 %Lexicon = (
-    '_PLUGIN_DESCRIPTION' => '<p>AmpConvert</p>
-<a target="_blank" href="https://github.com/ARK-Web/mt_plugin_AmpConvert">Plugin Home</a>',
+    '_PLUGIN_DESCRIPTION' => 'AmpConvert',
     '_PLUGIN_AUTHOR' => 'ARK-Web co., ltd.',
 );
 
