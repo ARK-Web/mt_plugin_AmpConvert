@@ -7,7 +7,7 @@ use vars qw( %Lexicon );
 
 %Lexicon = (
     '_PLUGIN_DESCRIPTION' => 'AmpConvert',
-    '_PLUGIN_AUTHOR' => 'ARK-WEB',
+    '_PLUGIN_AUTHOR' => 'ARK-Web co., ltd.',
 );
 
 1;
