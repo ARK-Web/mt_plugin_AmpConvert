@@ -11,6 +11,7 @@ sub new {
 	$self->{"end_tags"} = [];
 	$self->{"base_url"} = $opts->{"base_url"} || '';
 	$self->{"fix_img_size"} = $opts->{"fix_img_size"} || '';
+	$self->{"responsive_width_threshold"} = $opts->{"responsive_width_threshold"};
 
 	my @modules = (
 		'HTML::TokeParser', 
@@ -122,6 +123,11 @@ sub convert_to_amp_img {
 			}
 		}
 	}
+	if (defined $self->{"responsive_width_threshold"} && $attr->{"width"}) {
+		if ($attr->{"width"} >= $self->{"responsive_width_threshold"}) {
+			$attr->{"layout"} = "responsive";
+		}
+	}
 	return $changed;
 }
 
@@ -161,6 +167,8 @@ sub convert_to_amp_end_tag {
 
 sub fix_img_width_height {
 	my ($self, $url) = @_;
+
+	$ENV{'PERL_LWP_SSL_VERIFY_HOSTNAME'} = 0;
 
 	my $ua = LWP::UserAgent->new;
 	my $response = $ua->get($url);
