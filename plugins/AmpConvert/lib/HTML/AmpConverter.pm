@@ -90,7 +90,7 @@ sub convert_to_amp {
 	my $changed = 0;
 
 	# delete style attr
-	if ($attr->{"style"}) {
+	if (defined $attr->{"style"}) {
 		delete $attr->{"style"};
 		$changed = 1;
 	}
