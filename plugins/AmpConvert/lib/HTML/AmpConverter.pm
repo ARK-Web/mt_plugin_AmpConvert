@@ -47,8 +47,10 @@ sub convert {
 			my %attrs     = %{$token->[2]};
 			my @attr_keys = @{$token->[3]};
 			my $text      = $token->[4];
+			my $prepend_text = "";
+			my $append_text = "";
 
-			my $changed = $self->convert_to_amp(\$tagname, \%attrs, \$text);
+			my $changed = $self->convert_to_amp(\$tagname, \%attrs, \$text, \$prepend_text, \$append_text);
 			if ($changed) {
 				my $end = $attrs{'/'} ? ' /' : '';
 				delete $attrs{'/'} if $attrs{'/'};
@@ -56,7 +58,7 @@ sub convert {
 				foreach my $key (keys %attrs) {
 					$attr_string .= sprintf(' %s="%s"', $key, $attrs{$key});
 				}
-				$content .= sprintf('<%s%s%s>', $tagname, $attr_string, $end);
+				$content .= sprintf('%s<%s%s%s>%s', $prepend_text, $tagname, $attr_string, $end, $append_text);
 			}
 			else {
 				$content .= $text;
@@ -85,7 +87,7 @@ sub convert {
 }
 
 sub convert_to_amp {
-	my ($self, $tagname, $attr) = @_;
+	my ($self, $tagname, $attr, $text, $prepend_text, $append_text) = @_;
 
 	my $changed = 0;
 
@@ -96,7 +98,7 @@ sub convert_to_amp {
 	}
 	# convert img tag to amp-img
 	if ($$tagname eq 'img') {
-		$changed |= $self->convert_to_amp_img($tagname, $attr);
+		$changed |= $self->convert_to_amp_img($tagname, $attr, $prepend_text, $append_text);
 	}
 	# convert youtube iframe to amp-youtube
 	elsif ($$tagname eq 'iframe') {
@@ -106,7 +108,7 @@ sub convert_to_amp {
 }
 
 sub convert_to_amp_img {
-	my ($self, $tagname, $attr) = @_;
+	my ($self, $tagname, $attr, $prepend_text, $append_text) = @_;
 
 	my $changed = 1;
 	$$tagname = 'amp-img';
@@ -128,6 +130,10 @@ sub convert_to_amp_img {
 			$attr->{"layout"} = "responsive";
 		}
 	}
+
+	delete $attr->{"/"} if $attr->{"/"};
+	$$append_text = '</amp-img>';
+
 	return $changed;
 }
 
