@@ -128,6 +128,17 @@ imgのsrcが相対パスである場合、base_url + imgのsrcで画像を取得
 * width,heightの自動設定は行なわれません。
 * MTログにログを残します。
 
+#### パラメーター:responsive_width_threshold(画像のwidthサイズ)
+
+layout="responsive"の付与について指定できます。
+画像が指定したwidthサイズ以上の場合、layout="responsive"を付与し、未満の場合は付与しません。
+
+`<mtAmpConvert responsive_width_threshold="100">` 
+* widthが100以上の画像の場合は、layout="responsive"を付与します。
+* 以下の場合は適用されません
+	* fix_img_size="0"など、widthが判定できない場合
+	* 画像にBASIC認証がかかっている場合
+
 #### amp-youtubeを使う場合
 
 amp-youtubeを使う時には、`<head>` 内に次のスクリプトを記述する必要があります。
