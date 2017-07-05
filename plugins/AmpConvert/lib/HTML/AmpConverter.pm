@@ -11,6 +11,7 @@ sub new {
 	$self->{"end_tags"} = [];
 	$self->{"base_url"} = $opts->{"base_url"} || '';
 	$self->{"fix_img_size"} = $opts->{"fix_img_size"} || '';
+	$self->{"responsive_width_threshold"} = $opts->{"responsive_width_threshold"};
 
 	my @modules = (
 		'HTML::TokeParser', 
@@ -46,8 +47,10 @@ sub convert {
 			my %attrs     = %{$token->[2]};
 			my @attr_keys = @{$token->[3]};
 			my $text      = $token->[4];
+			my $prepend_text = "";
+			my $append_text = "";
 
-			my $changed = $self->convert_to_amp(\$tagname, \%attrs, \$text);
+			my $changed = $self->convert_to_amp(\$tagname, \%attrs, \$text, \$prepend_text, \$append_text);
 			if ($changed) {
 				my $end = $attrs{'/'} ? ' /' : '';
 				delete $attrs{'/'} if $attrs{'/'};
@@ -55,7 +58,7 @@ sub convert {
 				foreach my $key (keys %attrs) {
 					$attr_string .= sprintf(' %s="%s"', $key, $attrs{$key});
 				}
-				$content .= sprintf('<%s%s%s>', $tagname, $attr_string, $end);
+				$content .= sprintf('%s<%s%s%s>%s', $prepend_text, $tagname, $attr_string, $end, $append_text);
 			}
 			else {
 				$content .= $text;
@@ -84,18 +87,18 @@ sub convert {
 }
 
 sub convert_to_amp {
-	my ($self, $tagname, $attr) = @_;
+	my ($self, $tagname, $attr, $text, $prepend_text, $append_text) = @_;
 
 	my $changed = 0;
 
 	# delete style attr
-	if ($attr->{"style"}) {
+	if (defined $attr->{"style"}) {
 		delete $attr->{"style"};
 		$changed = 1;
 	}
 	# convert img tag to amp-img
 	if ($$tagname eq 'img') {
-		$changed |= $self->convert_to_amp_img($tagname, $attr);
+		$changed |= $self->convert_to_amp_img($tagname, $attr, $prepend_text, $append_text);
 	}
 	# convert youtube iframe to amp-youtube
 	elsif ($$tagname eq 'iframe') {
@@ -105,7 +108,7 @@ sub convert_to_amp {
 }
 
 sub convert_to_amp_img {
-	my ($self, $tagname, $attr) = @_;
+	my ($self, $tagname, $attr, $prepend_text, $append_text) = @_;
 
 	my $changed = 1;
 	$$tagname = 'amp-img';
@@ -122,6 +125,15 @@ sub convert_to_amp_img {
 			}
 		}
 	}
+	if (defined $self->{"responsive_width_threshold"} && $attr->{"width"}) {
+		if ($attr->{"width"} >= $self->{"responsive_width_threshold"}) {
+			$attr->{"layout"} = "responsive";
+		}
+	}
+
+	delete $attr->{"/"} if $attr->{"/"};
+	$$append_text = '</amp-img>';
+
 	return $changed;
 }
 
@@ -161,6 +173,8 @@ sub convert_to_amp_end_tag {
 
 sub fix_img_width_height {
 	my ($self, $url) = @_;
+
+	$ENV{'PERL_LWP_SSL_VERIFY_HOSTNAME'} = 0;
 
 	my $ua = LWP::UserAgent->new;
 	my $response = $ua->get($url);
