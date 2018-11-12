@@ -141,7 +141,7 @@ sub convert_to_amp_youtube {
 	my ($self, $tagname, $attr) = @_;
 
 	my $changed = 0;
-	if (defined $attr->{"src"} && $attr->{"src"} =~ m/^https?:\/\/www\.youtube\.com\/embed\/(.*)$/) {
+	if (defined $attr->{"src"} && $attr->{"src"} =~ m/^https?:\/\/www\.youtube\.com\/embed\/([^\?]*)/) {
 		my $videoid = $1;
 		$$tagname = 'amp-youtube';
 		$attr->{"data-videoid"} = $videoid;
