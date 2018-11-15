@@ -5,7 +5,7 @@
 ARK-Web/mt_plugin_AmpConvert - Movable TypeでのAMP対応ページ生成を支援するプラグインです。
 
 ### 概要
-* img タグを amp-img に変換し、さらに画像サイズ属性が不足してたら付加する
+* img タグを amp-img に変換し、さらに画像サイズ属性が不足していたら付加する
 * YouTube埋め込みコードを amp-youtube タグに変換する
 * 余分なインラインCSSの記述を除去する
 
@@ -66,6 +66,7 @@ amp-youtube 変換後
 ### 動作条件
 
 * Movable Type 6
+* Movable Type 7
 * MTクラウド対応
 
 * 必要モジュール: 
