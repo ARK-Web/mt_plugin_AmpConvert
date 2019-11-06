@@ -12,6 +12,7 @@ sub new {
 	$self->{"base_url"} = $opts->{"base_url"} || '';
 	$self->{"fix_img_size"} = $opts->{"fix_img_size"} || '';
 	$self->{"responsive_width_threshold"} = $opts->{"responsive_width_threshold"};
+	$self->{"dont_remove_style"} = $opts->{"dont_remove_style"} || '';
 
 	my @modules = (
 		'HTML::TokeParser', 
@@ -92,7 +93,7 @@ sub convert_to_amp {
 	my $changed = 0;
 
 	# delete style attr
-	if (defined $attr->{"style"}) {
+	if (!$self->{"dont_remove_style"} && defined $attr->{"style"}) {
 		delete $attr->{"style"};
 		$changed = 1;
 	}
