@@ -17,6 +17,7 @@ ARK-Web/mt_plugin_AmpConvert - Movable TypeでのAMP対応ページ生成を支�
 #### 1. インライン style の除去
 
 `<mt:AmpConvert>〜</mt:AmpConvert>` 内の 全てのインラインCSSの記述「style="XXX"」が削除されます。
+※パラメーターの指定でオフにできます
 
 
 #### 2. img → amp-imgへ変換
@@ -25,7 +26,8 @@ ARK-Web/mt_plugin_AmpConvert - Movable TypeでのAMP対応ページ生成を支�
 
 **amp-imgのwidth,height自動設定**
 
-元のimgタグに width または height 属性が記述されていない場合に、画像のサイズを取得して、amp-img に自動設定します(パラメータの指定でオフにできます)。
+元のimgタグに width または height 属性が記述されていない場合に、画像のサイズを取得して、amp-img に自動設定します。
+※パラメータの指定でオフにできます
 
 なんらかの理由で画像が取得できなかった場合は、width,heightの自動設定は行われず、MTログにログを残します。
 
@@ -73,6 +75,7 @@ amp-youtube 変換後
   * AmpConvertの利用には、HTML::Parserモジュールが必要です。
   * HTML::Parserがインストールされていない環境の場合は、再構築時にエラーを出力します。
 
+* スタティックパブリッシング専用
 
 ### ダウンロード
 
@@ -104,6 +107,9 @@ amp-img タグの width, height 属性の自動設定の実行を制御するパ
 
 * fix_img_size="0":  width,heightを自動設定しない
 * fix_img_size="1":  width,heightを自動設定する
+* dont_remove_style="1"：style属性を削除しない
+* dont_remove_style="0"：style属性を削除する
+
 * デフォルト(無指定時)は width,heightを自動設定します。
 
 ##### パラメーター: base_url ()
