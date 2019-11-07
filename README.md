@@ -110,7 +110,7 @@ amp-img タグの width, height 属性の自動設定の実行を制御するパ
 * dont_remove_style="1"：style属性を削除しない
 * dont_remove_style="0"：style属性を削除する
 
-* デフォルト(無指定時)は width,heightを自動設定します。
+* デフォルト(無指定時)は style属性を削除し、width,heightを自動設定します。
 
 ##### パラメーター: base_url ()
 
