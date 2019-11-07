@@ -99,7 +99,12 @@ ampページを出力するアーカイブテンプレートを追加し、
 	<mt:AmpConvert fix_img_size="1" base_url="http://example.com">
 	    <mt:EntryBody> など変換対象
 	</mt:AmpConvert>
+	
+##### パラメーター: dont_remove_style (style属性削除機能のオン/オフ)
 
+* dont_remove_style="1"：style属性を削除しない
+* dont_remove_style="0"：style属性を削除する
+* デフォルト(無指定時)は style属性を削除します。
 
 ##### パラメーター: fix_img_size (画像サイズ属性自動設定機能のオン/オフ)
 
@@ -107,10 +112,7 @@ amp-img タグの width, height 属性の自動設定の実行を制御するパ
 
 * fix_img_size="0":  width,heightを自動設定しない
 * fix_img_size="1":  width,heightを自動設定する
-* dont_remove_style="1"：style属性を削除しない
-* dont_remove_style="0"：style属性を削除する
-
-* デフォルト(無指定時)は style属性を削除し、width,heightを自動設定します。
+* デフォルト(無指定時)はwidth,heightを自動設定します。
 
 ##### パラメーター: base_url ()
 
