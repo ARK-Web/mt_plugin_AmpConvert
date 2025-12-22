@@ -67,8 +67,7 @@ amp-youtube 変換後
 
 ### 動作条件
 
-* Movable Type 8
-* Movable Type 7, 6
+* Movable Type 6,7,8,9
 * MTクラウド対応
 
 * 必要モジュール: 
